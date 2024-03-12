@@ -38,82 +38,33 @@
      </layout>
     </item>
     <item>
-     <layout class="QHBoxLayout" name="optionsLayout">
-      <item alignment="Qt::AlignHCenter">
-       <widget class="QRadioButton" name="optionRadio1">
-        <property name="text">
-         <string/>
-        </property>
-        <property name="checked">
-         <bool>false</bool>
-        </property>
-        <property name="autoExclusive">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QLabel" name="optionLabel1">
-        <property name="text">
-         <string>TextLabel</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
+     <widget class="QListWidget" name="listWidget"/>
     </item>
     <item>
-     <layout class="QHBoxLayout" name="optionsLayout_2">
-      <item alignment="Qt::AlignHCenter">
-       <widget class="QRadioButton" name="optionRadio2">
-        <property name="text">
-         <string/>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QLabel" name="optionLabel2">
-        <property name="text">
-         <string>TextLabel</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </item>
-    <item>
-     <layout class="QHBoxLayout" name="optionsLayout_3">
-      <item alignment="Qt::AlignHCenter">
-       <widget class="QRadioButton" name="optionRadio3">
-        <property name="text">
-         <string/>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QLabel" name="optionLabel2_2">
-        <property name="text">
-         <string>TextLabel</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </item>
-    <item>
-     <layout class="QHBoxLayout" name="optionsLayout_4">
-      <item alignment="Qt::AlignHCenter">
-       <widget class="QRadioButton" name="optionRadio4">
-        <property name="text">
-         <string/>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QLabel" name="optionLabel4">
-        <property name="text">
-         <string>TextLabel</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
+     <widget class="QWidget" name="optionWidget" native="true">
+      <layout class="QHBoxLayout" name="optionsLayout">
+       <item alignment="Qt::AlignHCenter">
+        <widget class="QRadioButton" name="optionRadio1">
+         <property name="text">
+          <string/>
+         </property>
+         <property name="checked">
+          <bool>false</bool>
+         </property>
+         <property name="autoExclusive">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="optionLabel1">
+         <property name="text">
+          <string>TextLabel</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
     </item>
    </layout>
   </widget>
