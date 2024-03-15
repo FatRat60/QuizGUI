@@ -16,7 +16,6 @@ def parseSlot(line: str) -> str:
         return ""
 
 if __name__ == "__main__":
-    # check if .h file generated
     args = sys.argv
     if len(args) < 2:
         print("no filename given")
@@ -131,7 +130,7 @@ if __name__ == "__main__":
 
 
     # Generate the .cpp and .h files
-    alreadyExists = os.path.exists(f"src/{file}.h")
+    alreadyExists = os.path.exists(f"src/{filename}.h")
     if not alreadyExists:
         # SUPER easy just go line by line in toWrite_lsit and write to file
         with open(f"src/{filename}.h", "w") as h_file:
@@ -169,13 +168,46 @@ if __name__ == "__main__":
         
     else:
         # SUPER NOT easy, read file contents first and then go line by line comparing to toWrite_list
-        KEYWORD_LIST = ["#include", "class", "private:", "public:", "\tpublic slots:", "private:"]
+        KEYWORD_LIST = ["#inc", "class", "private:", "public:", "\tpublic slots:", "private:"]
         with open(f"src/{filename}.h", "r") as h_file:
             h_contents = h_file.read().split("\n")
-        writeLists = [toWrite_list, h_contents]
-        keyword_index = 0
+        H_CONT_MAX = len(h_contents)
+        old_ptr = 0
+        TO_WRITE_MAX = len(toWrite_list)
+        new_ptr = 0
         with open(f"src/{filename}.h", "w") as h_file:
-            pass
 
+            for keyword in KEYWORD_LIST:
+
+                backup_ptr = new_ptr
+                exists = True
+                while not toWrite_list[new_ptr].startswith(keyword):
+                    new_ptr += 1
+                    # keyword not found, cont to next one
+                    if new_ptr >= TO_WRITE_MAX:
+                        new_ptr = backup_ptr
+                        exists = False
+                        break
+                
+                if exists:
+
+                    # write everything before keyword
+                    while not h_contents[old_ptr].startswith(keyword):
+                        h_file.write(h_contents[old_ptr] + "\n")
+                        old_ptr += 1 # inc ptr
+
+                    # new_ptr and old_ptr should be pointing at same thing now
+                    while toWrite_list[new_ptr].startswith(keyword):
+                        h_file.write(toWrite_list[new_ptr] + "\n")
+                        old_ptr += toWrite_list[new_ptr] == h_contents[old_ptr] # only inc old if they're same
+                        new_ptr += 1
+
+                    
+            # finish writing rest of old contents
+            while old_ptr < H_CONT_MAX - 1:
+                h_file.write(h_contents[old_ptr] + "\n")
+                old_ptr += 1
+            if h_contents[old_ptr] != "":
+                h_file.write(h_contents[old_ptr])
             
             
