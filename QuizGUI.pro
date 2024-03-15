@@ -3,10 +3,12 @@ TARGET = QuizGUI
 
 # Specify source
 SOURCES += \
-    src/main.cpp
+    src/main.cpp \
+	src/MCquestion.cpp
 
 # Specify any headers
-HEADERS +=
+HEADERS += \
+	src/MCquestion.h
 
 # Specify any resources
 RESOURCES += resource.qrc

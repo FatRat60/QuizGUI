@@ -6,22 +6,25 @@ if [ "$#" -ne 1 ]; then
     exit 1
 fi
 
-cd src
+# check if GeneratedFiles exists
+if [ ! -d "GeneratedFiles" ]; then
+    mkdir GeneratedFiles
+fi
 
 # get filename from args
 filename="$1"
+base=$(basename "$filename")
+base_without_ext="${base%.*}"
 
 # Run script
-uic "$filename.ui" -o "$filename.cpp"
+uic -o "GeneratedFiles/ui_$base_without_ext.h" "$filename" 
 
 if [ $? -ne 0 ]; then
     echo "Error: uic failed"
     exit 1
 fi
 
-echo "$filename.cpp successfully created"
+echo "ui_$base_without_ext.h successfully created"
 
-cd ..
-
-# edit file in future
-python editPro.py "$filename"
+# edit pro file and generate .cpp and .h
+python3 editPro.py "$base_without_ext"
