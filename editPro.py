@@ -60,9 +60,10 @@ if __name__ == "__main__":
                 break
         if not existsHFile:
             oldLastLine = header_lines[-1]
-            newLastLine = f"\tsrc/{filename}.h"
+            newLastLine = f"\tsrc/{filename}.h \\"
             header_lines[-1] = f"{oldLastLine} \\"
             header_lines.append(newLastLine)
+            header_lines.append(f"\tGeneratedFiles/ui_{filename}.h")
             sections[2] = "\n".join(header_lines)
             doWrite = True # think this is redundant but just to be safe
         
@@ -100,7 +101,6 @@ if __name__ == "__main__":
         toWrite_list.append("")
         toWrite_list.append("public:")
         toWrite_list.append(f"\t{filename}({parent_class} *parent = Q_NULLPTR);")
-        toWrite_list.append("\tvoid initialize();")
         toWrite_list.append("")
 
         # skip ahead in file until slots part

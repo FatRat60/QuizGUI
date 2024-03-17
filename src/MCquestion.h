@@ -8,7 +8,6 @@ private:
 
 public:
 	MCquestion(QWidget *parent = Q_NULLPTR);
-	void initialize();
 
 private:
 	Ui::MCQuestionClass ui;

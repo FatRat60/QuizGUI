@@ -1,4 +1,10 @@
+#include <QtWidgets/QApplication>
+#include "MCquestion.h"
+
 int main(int argc, char* argv[])
 {
-    return 0;
+    QApplication app(argc, argv);
+    MCquestion w;
+    w.show();
+    return app.exec();
 }
