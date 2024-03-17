@@ -209,5 +209,52 @@ if __name__ == "__main__":
                 old_ptr += 1
             if h_contents[old_ptr] != "":
                 h_file.write(h_contents[old_ptr])
-            
-            
+        
+        # Check cpp file
+        with open(f"src/{filename}.cpp", "r") as cpp_file:
+            cpp_contents = cpp_file.read().split("\n")
+        if cpp_contents[-1] == "":
+            cpp_contents.pop()
+        CPP_CONT_MAX = len(cpp_contents)
+        cpp_ptr = 0
+        with open(f"src/{filename}.cpp", "w") as cpp_file:
+            with open(f"src/{filename}.h", "r") as h_file:
+                # skip to public:
+                current_line = h_file.readline()
+                while not current_line.startswith("public") and current_line != "":
+                    current_line = h_file.readline()
+                if current_line == "":
+                    # reached eof without seeing public:
+                    print(f"Could not parse functions. public: not found in {filename}.h\n{filename}.cpp not changed")
+                    while cpp_ptr < CPP_CONT_MAX:
+                        cpp_file.write(cpp_contents[cpp_ptr] + "\n")
+                else:
+                    # public found. Begin checking functions
+                    while not current_line.startswith("private"):
+                        # check for public slots
+                        if current_line.lstrip().startswith("public"):
+                            current_line = h_file.readline()
+                            continue
+                        
+                        h_tokens = current_line.split("(") # [0] = funct name/type [1] parameters
+                        nameType = h_tokens[0].lstrip().split(" ") # [0] = type [1] = name
+                        if len(nameType) > 1:
+                            # method
+                            name = nameType[1]
+                            funcType = nameType[0]
+                        else:
+                            # constructor
+                            current_line = h_file.readline()
+                            continue
+                        cpp_tokens = cpp_contents[cpp_ptr].split("(")
+                        # Write until you reach first function
+                        while not cpp_tokens[0].endswith(name):
+                            cpp_file.write("(".join(cpp_tokens) + "\n")
+                            cpp_ptr += 1
+                            cpp_tokens = cpp_contents[cpp_ptr].split("(")
+                        current_line = h_file.readline()
+                    # Write any remaining things
+                    while cpp_ptr < CPP_CONT_MAX:
+                        cpp_file.write(cpp_contents[cpp_ptr] + "\n")
+                        cpp_ptr += 1
+                        

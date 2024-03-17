@@ -9,7 +9,6 @@ private:
 public:
 	MCquestion(QWidget *parent = Q_NULLPTR);
 	void initialize();
-	void cuckhold();
 
 private:
 	Ui::MCQuestionClass ui;
